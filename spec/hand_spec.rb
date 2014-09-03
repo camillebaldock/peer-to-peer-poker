@@ -35,6 +35,9 @@ describe Hand do
   let(:straight_hand_high_ace) {
     HandParser.new.parse(["10h", "jh", "qh", "kh", "ad"])
   }
+  let(:straight_flush_hand) {
+    HandParser.new.parse(["5h", "6h", "7h", "8h", "9h"])
+  }
 
   describe "#better_than" do
     it "tells me if the hand is better" do
@@ -93,6 +96,10 @@ describe Hand do
 
     it "works with a two pair hand" do
       expect(two_pair_hand.rank).to eq ({:type => :two_pair})
+    end
+
+    it "works with a straight flush hand" do
+      expect(straight_flush_hand.rank).to eq ({:type => :straight_flush})
     end
   end
 end

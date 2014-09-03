@@ -16,14 +16,16 @@ class Hand
   ]
 
   def rank
-    if has_four
+    if straight_flush
+      { :type => :straight_flush }
+    elsif has_four
       { :type => :four_of_a_kind }
     elsif full_house
       { :type => :full_house }
-    elsif straight
-      { :type => :straight }
     elsif flush
       { :type => :flush }
+    elsif straight
+      { :type => :straight }
     elsif has_three
       { :type => :three_of_a_kind }
     elsif has_two_pairs
@@ -92,6 +94,10 @@ class Hand
     else
       consecutive_cards?(card_values)
     end
+  end
+
+  def straight_flush
+    straight && flush
   end
 
   #TODO: live in a helper, utility

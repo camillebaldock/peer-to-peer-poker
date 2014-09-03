@@ -11,5 +11,7 @@ TBA
 ## After the video
 
 1) Finish implementing all the poker hands
-
 in a "shameless green" style
+
+2) Address the ```##DUPE! pip_count``` comment
+the ```pip_count``` and ```suit_count``` methods are essentially duplicates of each other

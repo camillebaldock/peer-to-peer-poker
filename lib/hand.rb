@@ -39,19 +39,17 @@ class Hand
 
   ##bob
   def pip_count
-    pips = cards.map(&:pips)
-    grouped_cards = pips.group_by { |i| i }
-    grouped_cards.each do |key, value|
-      grouped_cards[key] = value.count
-    end
+    value_occurence_count(cards.map(&:pips))
   end
 
-  ##DUPE! pip_count
   def suit_count
-    suits = cards.map(&:suit)
-    grouped_cards = suits.group_by { |i| i }
-    grouped_cards.each do |key, value|
-      grouped_cards[key] = value.count
+    value_occurence_count(cards.map(&:suit))
+  end
+
+  def value_occurence_count(array)
+    grouped_values = array.group_by { |i| i }
+    grouped_values.each do |key, value|
+      grouped_values[key] = value.count
     end
   end
 

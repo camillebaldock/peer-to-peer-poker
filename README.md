@@ -8,3 +8,8 @@ A “hand” in poker consists of five playing cards drawn from a standard deck.
 
 TBA
 
+## After the video
+
+1) Finish implementing all the poker hands
+
+in a "shameless green" style

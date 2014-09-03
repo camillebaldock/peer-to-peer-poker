@@ -26,6 +26,8 @@ class Hand
       { :type => :flush }
     elsif has_three
       { :type => :three_of_a_kind }
+    elsif has_two_pairs
+      { :type => :two_pair }
     elsif has_two
       { :type => :pair }
     else
@@ -57,6 +59,11 @@ class Hand
 
   def has_three
     pip_count.values.include?(3)
+  end
+
+  def has_two_pairs
+    grouped_pip_counts = pip_count.values.group_by { |i| i }
+    grouped_pip_counts[2] && grouped_pip_counts[2].size == 2
   end
 
   def has_two

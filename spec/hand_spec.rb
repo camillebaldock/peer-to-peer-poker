@@ -11,6 +11,9 @@ describe Hand do
   let(:highest_hand) {
     HandParser.new.parse(["4h", "5d", "6d", "7d", "9d"])
   }
+  let(:two_pair_hand) {
+    HandParser.new.parse(["4h", "4d", "6d", "6h", "9s"])
+  }
   let(:three_of_a_kind_hand) {
     HandParser.new.parse(["5h", "5d", "5s", "7d", "8d"])
   }
@@ -86,6 +89,10 @@ describe Hand do
 
     it "works with a straight with high ace" do
       expect(straight_hand_high_ace.rank).to eq ({:type => :straight})
+    end
+
+    it "works with a two pair hand" do
+      expect(two_pair_hand.rank).to eq ({:type => :two_pair})
     end
   end
 end

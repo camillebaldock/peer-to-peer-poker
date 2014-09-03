@@ -45,15 +45,15 @@ describe Hand do
     end
   end
 
-  describe "#pip_count" do
+  describe "#pips_occurence_count" do
     it "returns information about the winning potential of the hand" do
-      expect(pair_hand.pip_count).to eq ({ 5 => 2, 6 => 1, 7 => 1, 8 => 1 })
+      expect(pair_hand.pips_occurence_count).to eq ({ 5 => 2, 6 => 1, 7 => 1, 8 => 1 }.values)
     end
   end
 
-  describe "#suit_count" do
+  describe "#suit_occurence_count" do
     it "returns information about the winning potential of the hand" do
-      expect(pair_hand.suit_count).to eq ({ :heart => 1, :diamonds => 4 })
+      expect(pair_hand.suit_occurence_count).to eq ({ :heart => 1, :diamonds => 4 }.values)
     end
   end
 

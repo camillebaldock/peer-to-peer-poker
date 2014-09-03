@@ -38,32 +38,31 @@ class Hand
     end
   end
 
-  ##bob
-  def pip_count
-    value_occurence_count(cards.map(&:pips))
+  def pips_occurence_count
+    value_occurence_count(cards.map(&:pips)).values
   end
 
-  def suit_count
-    value_occurence_count(cards.map(&:suit))
+  def suit_occurence_count
+    value_occurence_count(cards.map(&:suit)).values
   end
 
   private
 
   def has_four
-    pip_count.values.include?(4)
+    pips_occurence_count.include?(4)
   end
 
   def has_three
-    pip_count.values.include?(3)
+    pips_occurence_count.include?(3)
   end
 
   def has_two_pairs
-    grouped_pip_counts = pip_count.values.group_by { |i| i }
+    grouped_pip_counts = pips_occurence_count.group_by { |i| i }
     grouped_pip_counts[2] && grouped_pip_counts[2].size == 2
   end
 
   def has_two
-    pip_count.values.include?(2)
+    pips_occurence_count.include?(2)
   end
 
   def full_house
@@ -71,7 +70,7 @@ class Hand
   end
 
   def flush
-    suit_count.values.include?(5)
+    suit_occurence_count.include?(5)
   end
 
   def straight

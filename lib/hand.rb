@@ -1,4 +1,5 @@
 class Hand
+  include ArrayHelper
 
   attr_reader :cards
 
@@ -44,13 +45,6 @@ class Hand
 
   def suit_count
     value_occurence_count(cards.map(&:suit))
-  end
-
-  def value_occurence_count(array)
-    grouped_values = array.group_by { |i| i }
-    grouped_values.each do |key, value|
-      grouped_values[key] = value.count
-    end
   end
 
   private

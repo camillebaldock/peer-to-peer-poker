@@ -1,3 +1,5 @@
+require "card"
+
 class Hand
   include ArrayHelper
 

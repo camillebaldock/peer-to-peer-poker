@@ -1,6 +1,5 @@
 require "spec_helper"
 require "hand_parser"
-require "wrong_number_of_cards_error"
 
 describe HandParser do
 

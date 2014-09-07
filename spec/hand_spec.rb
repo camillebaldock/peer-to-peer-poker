@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'hand'
 require 'hand_parser'
+require 'card_parser'
 
 describe Hand do
 

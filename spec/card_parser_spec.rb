@@ -9,7 +9,7 @@ describe CardParser do
   let(:queen_card_string) { "qc" }
   let(:king_card_string) { "ks" }
   let(:ace_card_string) { "ad" }
-  let(:ace_as_one_card_string) { "1h" }
+  let(:ace_as_one_card_string) { "1d" }
 
   it "parses a card string with a single digit number" do
     parsed_card = described_class.new.parse(single_digit_card_string)
@@ -47,12 +47,22 @@ describe CardParser do
     expect(parsed_card.fetch(:pips)).to eq 14
   end
 
-  it "parses an ace card string when it is written as a 1"
+  it "parses an ace card string when it is written as a 1" do
+    parsed_card = described_class.new.parse(ace_as_one_card_string)
+    expect(parsed_card.fetch(:suit)).to eq :diamonds
+    expect(parsed_card.fetch(:pips)).to eq 14
+  end
 
-  it "fails if the card string does not have a recognised suit"
+  it "fails if the card string does not have a recognised suit" do
+    expect{described_class.new.parse("5z")}.to raise_error(UnrecognisedSuitError)
+  end
 
-  it "fails if the card string is in the wrong format"
+  it "fails if the wrong capitalisation is used for the suit" do
+    expect{described_class.new.parse("5D")}.to raise_error(UnrecognisedSuitError)
+  end
 
-  it "fails if the wrong capitalisation is used"
+  it "fails if the wrong capitalisation is used for the pips" do
+    expect{described_class.new.parse("Qd")}.to raise_error(UnrecognisedPipsError)
+  end
 
 end

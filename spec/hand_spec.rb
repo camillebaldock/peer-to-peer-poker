@@ -4,7 +4,8 @@ require 'hand_parser'
 
 describe Hand do
 
-  let(:hand_parser) { HandParser.new }
+  let(:card_parser) { CardParser.new }
+  let(:hand_parser) { HandParser.new(card_parser) }
   let(:pair_hand_string_array) { ["5h", "5d", "6d", "7d", "8d"] }
   let(:highest_hand_string_array) { ["4h", "5d", "6d", "7d", "9d"] }
   let(:two_pair_hand_string_array) { ["4h", "4d", "6d", "6h", "9s"] }

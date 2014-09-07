@@ -27,3 +27,7 @@ The consecutive_cards? methods is mainly checking whether an array is made of co
 The HandParser now gets initialized with an array of card strings and fails if the array is the wrong size.
 
 6) Address the ```#TODO: this is not a nice interface``` comment
+
+7) Open closed principle: move logic to CardParser
+New card parser and add pending tests:
+#TODO: fail loudly and with better errors with unexpected inputs

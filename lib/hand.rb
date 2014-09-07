@@ -4,7 +4,10 @@ class Hand
   attr_reader :cards
 
   def initialize(card_input, hand_parser)
-    @cards = hand_parser.parse(card_input)
+    card_hashes = hand_parser.parse(card_input)
+    @cards = card_hashes.map do |card_hash|
+      Card.new(card_hash.fetch(:pips), card_hash.fetch(:suit))
+    end
   end
 
   def better_than?(other_hand)

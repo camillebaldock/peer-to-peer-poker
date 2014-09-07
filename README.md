@@ -25,3 +25,5 @@ The consecutive_cards? methods is mainly checking whether an array is made of co
 
 5) Address the ```#TODO: fail nicely when not 5 cards``` comment
 The HandParser now gets initialized with an array of card strings and fails if the array is the wrong size.
+
+6) Address the ```#TODO: this is not a nice interface``` comment

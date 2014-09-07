@@ -19,26 +19,26 @@ describe HandParser do
 
   describe "#parse" do
     it "returns a hand of 5 cards" do
-      hand = described_class.new.parse(array_of_five_cards)
-      expect(hand.cards.count).to eq 5
+      parsed_cards = described_class.new.parse(array_of_five_cards)
+      expect(parsed_cards.count).to eq 5
     end
 
     it "returns the right cards" do
-      hand = described_class.new.parse(array_of_five_cards)
-      expect(hand.cards.first.suit).to eq :hearts
-      expect(hand.cards.first.pips).to eq 5
+      parsed_cards = described_class.new.parse(array_of_five_cards)
+      expect(parsed_cards.first.suit).to eq :hearts
+      expect(parsed_cards.first.pips).to eq 5
     end
 
     it "returns the right cards" do
-      hand = described_class.new.parse(array_of_five_cards)
-      expect(hand.cards[1].suit).to eq :diamonds
-      expect(hand.cards[1].pips).to eq 10
+      parsed_cards = described_class.new.parse(array_of_five_cards)
+      expect(parsed_cards[1].suit).to eq :diamonds
+      expect(parsed_cards[1].pips).to eq 10
     end
 
     it "returns the right cards" do
-      hand = described_class.new.parse(array_of_five_cards)
-      expect(hand.cards[2].suit).to eq :spades
-      expect(hand.cards[2].pips).to eq 13
+      parsed_cards = described_class.new.parse(array_of_five_cards)
+      expect(parsed_cards[2].suit).to eq :spades
+      expect(parsed_cards[2].pips).to eq 13
     end
   end
 

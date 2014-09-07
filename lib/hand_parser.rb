@@ -10,7 +10,6 @@ class HandParser
     cards = array_of_string_cards.map do |card_string|
       make_card(card_string)
     end
-    Hand.new(cards)
   end
 
   private

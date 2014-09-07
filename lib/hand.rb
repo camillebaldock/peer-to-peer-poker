@@ -93,18 +93,8 @@ class Hand
     straight && flush
   end
 
-  #TODO: live in a helper, utility
   def consecutive_cards?(card_values)
-    card_values.sort!
-    #Magic number 4 => always 5 cards per hand
-    difference_always_1 = true
-    i = 0
-    while (difference_always_1 && i < 4) do
-      difference_between_pips = card_values[i+1] - card_values[i]
-      difference_always_1 = difference_between_pips == 1
-      i += 1
-    end
-    difference_always_1
+    array_consecutive_integers?(card_values)
   end
 
 end

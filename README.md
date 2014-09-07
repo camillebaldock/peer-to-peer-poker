@@ -22,3 +22,6 @@ In this case ```pip_count``` and ```suit_count``` don't describe the intention o
 
 4) Address the ```#TODO: live in a helper, utility``` comment
 The consecutive_cards? methods is mainly checking whether an array is made of consecutive integers. The logic for this is now moved to the ArrayHelper. 
+
+5) Address the ```#TODO: fail nicely when not 5 cards``` comment
+The HandParser now gets initialized with an array of card strings and fails if the array is the wrong size.

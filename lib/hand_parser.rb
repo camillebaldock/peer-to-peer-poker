@@ -2,8 +2,11 @@ require 'hand'
 require 'card'
 
 class HandParser
-  #TODO: fail nicely when not 5 cards
+
   def parse(array_of_string_cards)
+    if array_of_string_cards.size != 5
+      raise WrongNumberOfCardsError.new(array_of_string_cards.size)
+    end
     cards = array_of_string_cards.map do |card_string|
       make_card(card_string)
     end
@@ -12,7 +15,7 @@ class HandParser
 
   private
 
-  SUITS = { "h" => :heart, "d" => :diamonds, 
+  SUITS = { "h" => :hearts, "d" => :diamonds, 
             "s" => :spades, "c" => :clubs}
   PIPS_FOR_HEADS = { "j" => 11, "q" => 12, "k" => 13, "a" => 14}
 

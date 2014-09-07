@@ -2,6 +2,7 @@ require "card"
 
 class Hand
   include ArrayHelper
+  include Comparable
 
   attr_reader :cards
 
@@ -12,13 +13,22 @@ class Hand
     end
   end
 
-  def better_than?(other_hand)
-    POKER_RANKS.index(rank.fetch(:type)) > POKER_RANKS.index(other_hand.rank.fetch(:type))
+  #TODO: this only implements comparison for cards of different types
+  #future things to handle include differentiating hands with the same type
+  def <=>(other_hand)
+    POKER_RANKS.index(rank.fetch(:type)) <=> POKER_RANKS.index(other_hand.rank.fetch(:type))
   end
 
   POKER_RANKS = [
+    :highest,
+    :pair,
+    :two_pair,
+    :three_of_a_kind,
+    :straight,
+    :flush,
     :full_house,
     :four_of_a_kind,
+    :straight_flush,
   ]
 
   def rank

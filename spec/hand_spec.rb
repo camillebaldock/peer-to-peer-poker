@@ -19,12 +19,12 @@ describe Hand do
   let(:straight_hand_high_ace_string_array) { ["10h", "jh", "qh", "kh", "ad"] }
   let(:straight_flush_hand_string_array) { ["5h", "6h", "7h", "8h", "9h"] }
 
-  describe "#better_than" do
+  describe "hand comparisons" do
     it "tells me if the hand is better" do
       four_of_a_kind_hand = described_class.new(four_of_a_kind_hand_string_array, hand_parser)
       full_house_hand = described_class.new(full_house_hand_string_array, hand_parser)
 
-      expect(four_of_a_kind_hand.better_than?(full_house_hand)).to be true
+      expect(four_of_a_kind_hand).to be > full_house_hand
     end
   end
 

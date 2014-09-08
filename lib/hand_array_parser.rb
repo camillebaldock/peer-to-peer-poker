@@ -1,6 +1,6 @@
 require "errors"
 
-class HandParser
+class HandArrayParser
 
   def initialize(card_parser)
     @card_parser = card_parser

@@ -1,7 +1,7 @@
 require "spec_helper"
-require "hand_parser"
+require "hand_array_parser"
 
-describe HandParser do
+describe HandArrayParser do
 
   let(:card_parser) { double(:card_parser, :parse => nil) }
   let(:array_of_five_cards) { ["5h", "10d", "ks", "qc", "1h"] }

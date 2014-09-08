@@ -19,19 +19,37 @@ class Hand
     if rank_type == other_hand_rank_type
       if rank.fetch(:type) == :full_house
         compare_highest(rank, other_hand.rank) ||
-        compare_filler(rank, other_hand.rank)
+        compare_filler(rank, other_hand.rank) ||
+        0
+      elsif rank.fetch(:type) == :two_pair
+        compare_pairs(rank, other_hand.rank) ||
+        compare_cards(rank, other_hand.rank) ||
+        0
       else
         compare_value(rank, other_hand.rank) || 
-        compare_cards(rank, other_hand.rank)
+        compare_cards(rank, other_hand.rank) ||
+        0
       end
     else
       POKER_RANKS.index(rank.fetch(:type)) <=> POKER_RANKS.index(other_hand.rank.fetch(:type))
     end
   end
 
+  #TODO: a lot of duplication here!!!
   def compare_cards(rank, other_rank)
-    (rank.fetch(:cards) - other_rank.fetch(:cards)).max <=> 
-    (other_rank.fetch(:cards) - rank.fetch(:cards)).max
+    cards = rank.fetch(:cards)
+    other_cards = other_rank.fetch(:cards)
+    if cards != other_cards
+      (cards - other_cards).max <=> (other_cards - cards).max
+    end
+  end
+
+  def compare_pairs(rank, other_rank)
+    cards = rank.fetch(:pairs)
+    other_cards = other_rank.fetch(:pairs)
+    if cards != other_cards
+      (cards - other_cards).max <=> (other_cards - cards).max
+    end
   end
 
   def compare_value(rank, other_rank)
@@ -117,8 +135,8 @@ class Hand
     if pips_per_occurence[2] && pips_per_occurence[2].size == 2
       { 
         :type => :two_pair, 
-        :pairs => pips_per_occurence[2], 
-        :kicker => pips_per_occurence[1].first 
+        :pairs => pips_per_occurence[2].sort.reverse, 
+        :cards => pips_per_occurence[1] 
       }
     end
   end

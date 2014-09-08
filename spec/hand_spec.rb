@@ -202,22 +202,48 @@ describe Hand do
     end
 
     context "two pairs" do
-      let(:hand_string_array) { ["4h", "4d", "6d", "6h", "9s"] }
+      let(:hand_string_array) { ["4h", "4d", "7d", "7h", "9s"] }
       it "ranks the hand correctly" do
         expect(hand.rank.fetch(:type)).to eq :two_pair
       end
       it "sets the pairs correctly" do
-        expect(hand.rank.fetch(:pairs)).to eq [4,6]
+        expect(hand.rank.fetch(:pairs)).to eq [7,4]
       end
       it "sets the kicker correctly" do
-        expect(hand.rank.fetch(:kicker)).to eq 9
+        expect(hand.rank.fetch(:cards).first).to eq 9
+      end
+      context "comparison" do
+        context "with a hand with no identical pairs, best pair lower, same kicker" do
+          let(:other_hand_string_array) { ["5h", "5d", "6d", "6h", "9s"] }
+          it "is better" do
+            expect(hand).to be > other_hand
+          end
+        end
+        context "with a hand with lower high pair, sane lower pair, same kicker" do
+          let(:other_hand_string_array) { ["4h", "4d", "6d", "6h", "9s"] }
+          it "is better" do
+            expect(hand).to be > other_hand
+          end
+        end
+        context "with a hand with high identical pair, one lower pair, same kicker" do
+          let(:other_hand_string_array) { ["3h", "3d", "7d", "7h", "9s"] }
+          it "is better" do
+            expect(hand).to be > other_hand
+          end
+        end
+        context "with a hand with the same two pairs and same pips on kicker" do
+          let(:other_hand_string_array) { ["4h", "4d", "7d", "7s", "9d"] }
+          it "is a tie" do
+            expect(hand).to be == other_hand
+          end
+        end
       end
     end
 
     context "two pairs with low kicker" do
       let(:hand_string_array) { ["4h", "4d", "6d", "6h", "2s"] }
       it "sets the kicker correctly" do
-        expect(hand.rank.fetch(:kicker)).to eq 2
+        expect(hand.rank.fetch(:cards).first).to eq 2
       end
     end
 

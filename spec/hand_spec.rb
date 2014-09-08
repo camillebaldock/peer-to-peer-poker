@@ -49,6 +49,12 @@ describe Hand do
       it "ranks the hand correctly" do
         expect(hand.rank.fetch(:type)).to eq :three_of_a_kind
       end
+      it "returns the value correctly" do
+        expect(hand.rank.fetch(:value)).to eq 5
+      end
+      it "returns the other cards correctly" do
+        expect(hand.rank.fetch(:cards)).to eq [8,7]
+      end
     end
 
     context "four of a kind" do

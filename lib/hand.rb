@@ -42,7 +42,7 @@ class Hand
     elsif straight
       straight
     elsif has_three
-      { :type => :three_of_a_kind }
+      has_three
     elsif has_two_pairs
       has_two_pairs
     elsif has_two
@@ -77,7 +77,13 @@ class Hand
   end
 
   def has_three
-    pips_per_occurence[3]
+    if pips_per_occurence[3]
+      { 
+        :type => :three_of_a_kind,
+        :value => pips_per_occurence[3].first,
+        :cards => pips_per_occurence[1].sort.reverse,
+      }
+    end
   end
 
   def has_two_pairs
@@ -101,7 +107,7 @@ class Hand
   end
 
   def full_house
-    has_three && pips_per_occurence[2]
+    pips_per_occurence[3] && pips_per_occurence[2]
   end
 
   def flush

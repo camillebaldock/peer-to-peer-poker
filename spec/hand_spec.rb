@@ -19,6 +19,8 @@ describe Hand do
   let(:straight_hand_low_ace_string_array) { ["2h", "3h", "4h", "5h", "ad"] }
   let(:straight_hand_high_ace_string_array) { ["10h", "jh", "qh", "kh", "ad"] }
   let(:straight_flush_hand_string_array) { ["5h", "6h", "7h", "8h", "9h"] }
+  let(:hand_string_array) { pair_hand_string_array }
+  let(:hand) { described_class.new(hand_string_array, hand_parser) }
 
   describe "hand comparisons" do
     it "tells me if the hand is better" do
@@ -31,106 +33,100 @@ describe Hand do
 
   describe "#pips_occurrence_count" do
     it "returns the correct pips occurrence count" do
-      pair_hand = described_class.new(pair_hand_string_array, hand_parser)
-
-      expect(pair_hand.pips_occurence_count).to eq ({ 5 => 2, 6 => 1, 7 => 1, 8 => 1 }.values)
+      expect(hand.pips_occurence_count).to eq ({ 5 => 2, 6 => 1, 7 => 1, 8 => 1 }.values)
     end
   end
 
   describe "#suit_occurrence_count" do
     it "returns the correct suit occurrence count" do
-      pair_hand = described_class.new(pair_hand_string_array, hand_parser)
-
-      expect(pair_hand.suit_occurence_count).to eq ({ :heart => 1, :diamonds => 4 }.values)
+      expect(hand.suit_occurence_count).to eq ({ :heart => 1, :diamonds => 4 }.values)
     end
   end
 
   describe "#rank" do
-    it "ranks a pair hand correctly" do
-      pair_hand = described_class.new(pair_hand_string_array, hand_parser)
-
-      expect(pair_hand.rank).to eq ({:type => :pair})
+    context "pair hand" do
+      it "ranks the hand correctly" do
+        expect(hand.rank.fetch(:type)).to eq :pair
+      end
     end
 
-    it "ranks a high card hand correctly" do
-      highest_hand = described_class.new(highest_hand_string_array, hand_parser)
-
-      expect(highest_hand.rank).to eq ({:type => :highest})
+    context "high card" do
+      let(:hand_string_array) { highest_hand_string_array }
+      it "ranks the hand correctly" do
+        expect(hand.rank.fetch(:type)).to eq :highest
+      end
     end
 
-    it "ranks a three of a kind hand correctly" do
-      three_of_a_kind_hand = described_class.new(three_of_a_kind_hand_string_array, hand_parser)
-
-      expect(three_of_a_kind_hand.rank).to eq ({:type => :three_of_a_kind})
+    context "three of a kind" do
+      let(:hand_string_array) { three_of_a_kind_hand_string_array }
+      it "ranks the hand correctly" do
+        expect(hand.rank.fetch(:type)).to eq :three_of_a_kind
+      end
     end
 
-    it "ranks a four of a kind hand correctly" do
-      four_of_a_kind_hand = described_class.new(four_of_a_kind_hand_string_array, hand_parser)
-
-      expect(four_of_a_kind_hand.rank).to eq ({:type => :four_of_a_kind})
+    context "four of a kind" do
+      let(:hand_string_array) { four_of_a_kind_hand_string_array }
+      it "ranks the hand correctly" do
+        expect(hand.rank.fetch(:type)).to eq :four_of_a_kind
+      end
     end
 
-    it "ranks a full house hand correctly" do
-      full_house_hand = described_class.new(full_house_hand_string_array, hand_parser)
-
-      expect(full_house_hand.rank).to eq ({:type => :full_house})
+    context "full house" do
+      let(:hand_string_array) { full_house_hand_string_array }
+      it "ranks the hand correctly" do
+        expect(hand.rank.fetch(:type)).to eq :full_house
+      end
     end
-
-    it "ranks a flush hand correctly" do
-      flush_hand = described_class.new(flush_hand_string_array, hand_parser)
-
-      expect(flush_hand.rank).to eq ({:type => :flush})
+    
+    context "flush hand" do
+      let(:hand_string_array) { flush_hand_string_array }
+      it "ranks the hand correctly" do
+        expect(hand.rank.fetch(:type)).to eq :flush
+      end
     end
 
     context "straight hand" do
+      let(:hand_string_array) { straight_hand_string_array }
       it "ranks the hand correctly" do
-        straight_hand = described_class.new(straight_hand_string_array, hand_parser)
-
-        expect(straight_hand.rank.fetch(:type)).to eq :straight
+        expect(hand.rank.fetch(:type)).to eq :straight
       end
       it "sets the highest hand correctly" do
-        straight_hand = described_class.new(straight_hand_string_array, hand_parser)
-
-        expect(straight_hand.rank.fetch(:highest)).to eq 9
+        expect(hand.rank.fetch(:highest)).to eq 9
       end
     end
 
     context "straight with low ace hand" do
+      let(:hand_string_array) { straight_hand_low_ace_string_array }
       it "ranks the hand correctly" do
-        straight_hand_low_ace = described_class.new(straight_hand_low_ace_string_array, hand_parser)
-
-        expect(straight_hand_low_ace.rank.fetch(:type)).to eq :straight
+        expect(hand.rank.fetch(:type)).to eq :straight
       end
       it "sets the highest hand correctly" do
-        straight_hand_low_ace = described_class.new(straight_hand_low_ace_string_array, hand_parser)
-
-        expect(straight_hand_low_ace.rank.fetch(:highest)).to eq 5
+        expect(hand.rank.fetch(:highest)).to eq 5
       end
     end
 
     context "straight with high ace hand" do
+      let(:hand_string_array) { straight_hand_high_ace_string_array }
       it "ranks the hand correctly" do
-        straight_hand_high_ace = described_class.new(straight_hand_high_ace_string_array, hand_parser)
-
-        expect(straight_hand_high_ace.rank.fetch(:type)).to eq :straight
+        expect(hand.rank.fetch(:type)).to eq :straight
       end
       it "sets the highest hand correctly" do
-        straight_hand_high_ace = described_class.new(straight_hand_high_ace_string_array, hand_parser)
-
-        expect(straight_hand_high_ace.rank.fetch(:highest)).to eq 14
+        expect(hand.rank.fetch(:highest)).to eq 14
       end
     end
 
-    it "ranks a two pair hand correctly" do
-      two_pair_hand = described_class.new(two_pair_hand_string_array, hand_parser)
-
-      expect(two_pair_hand.rank).to eq ({:type => :two_pair})
+    context "two pairs" do
+      let(:hand_string_array) { two_pair_hand_string_array }
+      it "ranks the hand correctly" do
+        expect(hand.rank.fetch(:type)).to eq :two_pair
+      end
     end
 
-    it "ranks a straight flush hand correctly" do
-      straight_flush_hand = described_class.new(straight_flush_hand_string_array, hand_parser)
-
-      expect(straight_flush_hand.rank).to eq ({:type => :straight_flush})
+    context "straight flush" do
+      let(:hand_string_array) { straight_flush_hand_string_array }
+      it "ranks the hand correctly" do
+        expect(hand.rank.fetch(:type)).to eq :straight_flush
+      end
     end
   end
 end

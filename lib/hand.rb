@@ -52,7 +52,11 @@ class Hand
   private
 
   def pips_per_occurence
-    results_per_occurence_number(cards.map(&:pips))
+    result = results_per_occurence_number(cards.map(&:pips))
+    result.each do |nb_occurence, pips|
+      result[nb_occurence] = pips.sort.reverse
+    end
+    result
   end
 
   def suits_per_occurence
@@ -80,7 +84,7 @@ class Hand
   def highest
     { 
       :type => :highest,
-      :cards => pips_per_occurence[1].sort.reverse
+      :cards => pips_per_occurence[1]
     }
   end
 
@@ -99,7 +103,7 @@ class Hand
       { 
         :type => :three_of_a_kind,
         :value => pips_per_occurence[3].first,
-        :cards => pips_per_occurence[1].sort.reverse,
+        :cards => pips_per_occurence[1],
       }
     end
   end
@@ -108,7 +112,7 @@ class Hand
     if pips_per_occurence[2] && pips_per_occurence[2].size == 2
       { 
         :type => :two_pair, 
-        :pairs => pips_per_occurence[2].sort.reverse, 
+        :pairs => pips_per_occurence[2], 
         :cards => pips_per_occurence[1] 
       }
     end
@@ -119,7 +123,7 @@ class Hand
       {
         :type => :pair, 
         :value => pips_per_occurence[2].first, 
-        :cards => pips_per_occurence[1].sort.reverse
+        :cards => pips_per_occurence[1]
       }
     end
   end
@@ -138,7 +142,7 @@ class Hand
     if suits_per_occurence[5]
       {
         :type => :flush,
-        :cards => pips_per_occurence[1].sort.reverse
+        :cards => pips_per_occurence[1]
       }
     end
   end

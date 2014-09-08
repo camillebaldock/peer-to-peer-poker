@@ -34,7 +34,7 @@ class Hand
     if straight_flush
       { :type => :straight_flush }
     elsif has_four
-      { :type => :four_of_a_kind }
+      has_four
     elsif full_house
       { :type => :full_house }
     elsif flush
@@ -62,8 +62,18 @@ class Hand
 
   private
 
+  def pips_per_occurence
+    results_per_occurence_number(cards.map(&:pips))
+  end
+
   def has_four
-    pips_occurence_count.include?(4)
+    if pips_per_occurence[4]
+      { 
+        :type => :four_of_a_kind, 
+        :value => pips_per_occurence[4].first, 
+        :kicker => pips_per_occurence[1].first 
+      }
+    end
   end
 
   def has_three
@@ -71,12 +81,11 @@ class Hand
   end
 
   def has_two_pairs
-    results_per_occurence = results_per_occurence_number(cards.map(&:pips))
-    if results_per_occurence[2] && results_per_occurence[2].size == 2
+    if pips_per_occurence[2] && pips_per_occurence[2].size == 2
       { 
         :type => :two_pair, 
-        :pairs => results_per_occurence[2], 
-        :kicker => results_per_occurence[1].first 
+        :pairs => pips_per_occurence[2], 
+        :kicker => pips_per_occurence[1].first 
       }
     end
   end

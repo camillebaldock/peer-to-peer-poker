@@ -70,6 +70,12 @@ describe Hand do
       it "ranks the hand correctly" do
         expect(hand.rank.fetch(:type)).to eq :four_of_a_kind
       end
+      it "sets the value correctly" do
+        expect(hand.rank.fetch(:value)).to eq 5
+      end
+      it "sets the kicker correctly" do
+        expect(hand.rank.fetch(:kicker)).to eq 8
+      end
     end
 
     context "full house" do

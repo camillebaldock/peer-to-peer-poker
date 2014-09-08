@@ -1,5 +1,3 @@
-#TODO: good messages missing
-
 class WrongNumberOfCardsError < Exception
 end
 

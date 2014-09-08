@@ -32,18 +32,6 @@ describe Hand do
     end
   end
 
-  describe "#pips_occurrence_count" do
-    it "returns the correct pips occurrence count" do
-      expect(hand.pips_occurence_count).to eq ({ 5 => 2, 6 => 1, 7 => 1, 8 => 1 }.values)
-    end
-  end
-
-  describe "#suit_occurrence_count" do
-    it "returns the correct suit occurrence count" do
-      expect(hand.suit_occurence_count).to eq ({ :heart => 1, :diamonds => 4 }.values)
-    end
-  end
-
   describe "#rank" do
     context "pair hand" do
       it "ranks the hand correctly" do

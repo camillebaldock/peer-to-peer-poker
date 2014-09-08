@@ -52,18 +52,14 @@ class Hand
     end
   end
 
-  def pips_occurence_count
-    value_occurence_count(cards.map(&:pips)).values
-  end
-
-  def suit_occurence_count
-    value_occurence_count(cards.map(&:suit)).values
-  end
-
   private
 
   def pips_per_occurence
     results_per_occurence_number(cards.map(&:pips))
+  end
+
+  def suits_per_occurence
+    results_per_occurence_number(cards.map(&:suit))
   end
 
   def has_four
@@ -77,7 +73,7 @@ class Hand
   end
 
   def has_three
-    pips_occurence_count.include?(3)
+    pips_per_occurence[3]
   end
 
   def has_two_pairs
@@ -91,7 +87,7 @@ class Hand
   end
 
   def has_two
-    pips_occurence_count.include?(2)
+    pips_per_occurence[2]
   end
 
   def full_house
@@ -99,7 +95,7 @@ class Hand
   end
 
   def flush
-    suit_occurence_count.include?(5)
+    suits_per_occurence[5]
   end
 
   def straight

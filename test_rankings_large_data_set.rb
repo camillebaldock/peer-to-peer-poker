@@ -21,7 +21,7 @@ RANKS =
   6 => :full_house,
   7 => :four_of_a_kind,
   8 => :straight_flush,
-  9 => :royal_flush,
+  9 => :straight_flush,
 }
 
 data_file = ARGV[0]

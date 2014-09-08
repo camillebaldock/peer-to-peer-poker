@@ -174,9 +174,9 @@ class Hand
     card_values = cards.map(&:pips)
     aces_as_ones = aces_as_ones(card_values)
     if aces_as_ones != card_values && consecutive_cards?(aces_as_ones)
-      { :type => :straight, :highest => 5 }
+      { :type => :straight, :value => 5 }
     elsif consecutive_cards?(card_values)
-      { :type => :straight, :highest => high_card }
+      { :type => :straight, :value => high_card }
     end
   end
 

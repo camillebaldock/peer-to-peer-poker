@@ -185,7 +185,15 @@ describe Hand do
         expect(hand.rank.fetch(:type)).to eq :straight
       end
       it "sets the highest hand correctly" do
-        expect(hand.rank.fetch(:highest)).to eq 9
+        expect(hand.rank.fetch(:value)).to eq 9
+      end
+      context "comparison" do
+        context "with a hand with a lower higher card" do
+          let(:other_hand_string_array) { ["5h", "6h", "7h", "8h", "4d"] }
+          it "is better" do
+            expect(hand).to be > other_hand
+          end
+        end
       end
     end
 
@@ -195,7 +203,7 @@ describe Hand do
         expect(hand.rank.fetch(:type)).to eq :straight
       end
       it "sets the highest hand correctly" do
-        expect(hand.rank.fetch(:highest)).to eq 5
+        expect(hand.rank.fetch(:value)).to eq 5
       end
     end
 
@@ -205,7 +213,7 @@ describe Hand do
         expect(hand.rank.fetch(:type)).to eq :straight
       end
       it "sets the highest hand correctly" do
-        expect(hand.rank.fetch(:highest)).to eq 14
+        expect(hand.rank.fetch(:value)).to eq 14
       end
     end
 
@@ -261,7 +269,15 @@ describe Hand do
         expect(hand.rank.fetch(:type)).to eq :straight_flush
       end
       it "sets the highest hand correctly" do
-        expect(hand.rank.fetch(:highest)).to eq 9
+        expect(hand.rank.fetch(:value)).to eq 9
+      end
+      context "comparison" do
+        context "with a hand with a lower higher card" do
+          let(:other_hand_string_array) { ["5h", "6h", "7h", "8h", "4h"] }
+          it "is better" do
+            expect(hand).to be > other_hand
+          end
+        end
       end
     end
 
@@ -271,7 +287,7 @@ describe Hand do
         expect(hand.rank.fetch(:type)).to eq :straight_flush
       end
       it "sets the highest hand correctly" do
-        expect(hand.rank.fetch(:highest)).to eq 5
+        expect(hand.rank.fetch(:value)).to eq 5
       end
     end
 
@@ -281,7 +297,7 @@ describe Hand do
         expect(hand.rank.fetch(:type)).to eq :straight_flush
       end
       it "sets the highest hand correctly" do
-        expect(hand.rank.fetch(:highest)).to eq 14
+        expect(hand.rank.fetch(:value)).to eq 14
       end
     end
   end

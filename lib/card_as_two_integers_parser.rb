@@ -1,5 +1,3 @@
-require "errors"
-
 class CardAsTwoIntegersParser
 
   def parse(array_suit_pips)

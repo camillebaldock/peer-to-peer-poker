@@ -1,5 +1,3 @@
-require "errors"
-
 class HandStringParser
   #Parser for hands written as documented in:
   #https://archive.ics.uci.edu/ml/machine-learning-databases/poker/poker-hand.names

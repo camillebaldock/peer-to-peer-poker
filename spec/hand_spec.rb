@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'hand'
 require 'hand_array_parser'
 require 'card_parser'
+require 'card'
 
 describe Hand do
 

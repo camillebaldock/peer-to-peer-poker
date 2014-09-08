@@ -1,5 +1,3 @@
-require "card"
-
 class Hand
   include ArrayHelper
   include Comparable

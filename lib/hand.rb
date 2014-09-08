@@ -46,7 +46,7 @@ class Hand
     elsif has_two_pairs
       has_two_pairs
     elsif has_two
-      { :type => :pair }
+      has_two
     else
       { :type => :highest }
     end
@@ -87,11 +87,17 @@ class Hand
   end
 
   def has_two
-    pips_per_occurence[2]
+    if pips_per_occurence[2]
+      {
+        :type => :pair, 
+        :value => pips_per_occurence[2].first, 
+        :cards => pips_per_occurence[1].sort.reverse
+      }
+    end
   end
 
   def full_house
-    has_three && has_two
+    has_three && pips_per_occurence[2]
   end
 
   def flush

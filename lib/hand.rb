@@ -88,15 +88,9 @@ class Hand
 
   def straight
     card_values = cards.map(&:pips)
-    number_aces = card_values.select{|i| i == 14}.count
-    if number_aces >= 1
-      aces_as_ones = card_values.clone
-      aces_as_ones.delete(14)
-      number_aces.times do
-        aces_as_ones << 1
-      end
-      consecutive_cards?(card_values) || 
-      consecutive_cards?(aces_as_ones)
+    aces_as_ones = aces_as_ones(card_values)
+    if aces_as_ones != card_values
+      consecutive_cards?(aces_as_ones) || consecutive_cards?(card_values)
     else
       consecutive_cards?(card_values)
     end
@@ -108,6 +102,18 @@ class Hand
 
   def consecutive_cards?(card_values)
     array_consecutive_integers?(card_values)
+  end
+
+  def aces_as_ones(card_values)
+    number_aces = card_values.select{|i| i == 14}.count
+    result = card_values.clone
+    if number_aces >= 1
+      result.delete(14)
+      number_aces.times do
+        result << 1
+      end
+    end
+    result
   end
 
 end

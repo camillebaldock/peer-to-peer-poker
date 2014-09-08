@@ -36,7 +36,7 @@ class Hand
     elsif has_four
       has_four
     elsif full_house
-      { :type => :full_house }
+      full_house
     elsif flush
       flush
     elsif straight
@@ -107,7 +107,13 @@ class Hand
   end
 
   def full_house
-    pips_per_occurence[3] && pips_per_occurence[2]
+    if pips_per_occurence[3] && pips_per_occurence[2]
+      {
+        :type => :full_house, 
+        :highest => pips_per_occurence[3].first, 
+        :full_of => pips_per_occurence[2].first
+      }
+    end
   end
 
   def flush

@@ -11,52 +11,17 @@ class Hand
     end
   end
 
-  #TODO: this only implements comparison for cards of different types
-  #future things to handle include differentiating hands with the same type
   def <=>(other_hand)
     rank_type = POKER_RANKS.index(rank.fetch(:type))
     other_hand_rank_type = POKER_RANKS.index(other_hand.rank.fetch(:type))
     if rank_type == other_hand_rank_type
-      rank.has_key?(:value) && compare_value(rank, other_hand.rank) || 
-      rank.has_key?(:full_of) && compare_filler(rank, other_hand.rank) ||
-      rank.has_key?(:pairs) && compare_pairs(rank, other_hand.rank) ||
-      rank.has_key?(:cards) && compare_cards(rank, other_hand.rank) ||
+      compare_value(:value, rank, other_hand.rank) || 
+      compare_value(:full_of, rank, other_hand.rank) ||
+      compare_card_arrays(:pairs, rank, other_hand.rank) ||
+      compare_card_arrays(:cards, rank, other_hand.rank) ||
       0
     else
       rank_type <=> other_hand_rank_type
-    end
-  end
-
-  #TODO: a lot of duplication here!!!
-  def compare_cards(rank, other_rank)
-    cards = rank.fetch(:cards)
-    other_cards = other_rank.fetch(:cards)
-    if cards != other_cards
-      (cards - other_cards).max <=> (other_cards - cards).max
-    end
-  end
-
-  def compare_pairs(rank, other_rank)
-    cards = rank.fetch(:pairs)
-    other_cards = other_rank.fetch(:pairs)
-    if cards != other_cards
-      (cards - other_cards).max <=> (other_cards - cards).max
-    end
-  end
-
-  def compare_value(rank, other_rank)
-    if rank.fetch(:value) != other_rank.fetch(:value)
-      rank.fetch(:value) <=> other_rank.fetch(:value)
-    end
-  end
-
-  def compare_filler(rank, other_rank)
-    rank.fetch(:full_of) <=> other_rank.fetch(:full_of)
-  end
-
-  def compare_highest(rank, other_rank)
-    if rank.fetch(:highest) != other_rank.fetch(:highest)
-      rank.fetch(:highest) <=> other_rank.fetch(:highest)
     end
   end
 
@@ -92,6 +57,24 @@ class Hand
 
   def suits_per_occurence
     results_per_occurence_number(cards.map(&:suit))
+  end
+
+  def compare_card_arrays(key, rank, other_rank)
+    if rank.has_key?(key)
+      cards = rank.fetch(key)
+      other_cards = other_rank.fetch(key)
+      if cards != other_cards
+        (cards - other_cards).max <=> (other_cards - cards).max
+      end
+    end
+  end
+
+  def compare_value(key, rank, other_rank)
+    if rank.has_key?(key)
+      if rank.fetch(key) != other_rank.fetch(key)
+        rank.fetch(key) <=> other_rank.fetch(key)
+      end
+    end
   end
 
   def highest

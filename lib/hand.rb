@@ -80,7 +80,7 @@ class Hand
       { 
         :type => :four_of_a_kind, 
         :value => pips_per_occurence[4].first, 
-        :kicker => pips_per_occurence[1].first 
+        :cards => pips_per_occurence[1] 
       }
     end
   end

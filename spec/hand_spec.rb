@@ -85,6 +85,20 @@ describe Hand do
       it "returns the other cards correctly" do
         expect(hand.rank.fetch(:cards)).to eq [8,7]
       end
+      context "comparison" do
+        context "with a hand with the same three of a kind but lower cards" do
+          let(:other_hand_string_array) { ["5h", "5d", "5s", "7s", "6s"] }
+          it "is better" do
+            expect(hand).to be > other_hand
+          end
+        end
+        context "with a hand with the same three of a kind and same pips for other cards" do
+          let(:other_hand_string_array) { ["5h", "5d", "5s", "7s", "8s"]  }
+          it "is a tie" do
+            expect(hand).to be == other_hand
+          end
+        end
+      end
     end
 
     context "four of a kind" do
@@ -96,7 +110,21 @@ describe Hand do
         expect(hand.rank.fetch(:value)).to eq 5
       end
       it "sets the kicker correctly" do
-        expect(hand.rank.fetch(:kicker)).to eq 8
+        expect(hand.rank.fetch(:cards).first).to eq 8
+      end
+      context "comparison" do
+        context "with a hand with the same four of a kind but lower cards" do
+          let(:other_hand_string_array) { ["5h", "5d", "5s", "5c", "6s"] }
+          it "is better" do
+            expect(hand).to be > other_hand
+          end
+        end
+        context "with a hand with the same four of a kind and same pips for other cards" do
+          let(:other_hand_string_array) { ["5h", "5d", "5s", "5c", "8h"]  }
+          it "is a tie" do
+            expect(hand).to be == other_hand
+          end
+        end
       end
     end
 

@@ -134,7 +134,7 @@ describe Hand do
         expect(hand.rank.fetch(:type)).to eq :full_house
       end
       it "returns the highest correctly" do
-        expect(hand.rank.fetch(:highest)).to eq 5
+        expect(hand.rank.fetch(:value)).to eq 5
       end
       it "returns the full_of value correctly" do
         expect(hand.rank.fetch(:full_of)).to eq 6

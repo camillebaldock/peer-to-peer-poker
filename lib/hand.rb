@@ -17,21 +17,13 @@ class Hand
     rank_type = POKER_RANKS.index(rank.fetch(:type))
     other_hand_rank_type = POKER_RANKS.index(other_hand.rank.fetch(:type))
     if rank_type == other_hand_rank_type
-      if rank.fetch(:type) == :full_house
-        compare_highest(rank, other_hand.rank) ||
-        compare_filler(rank, other_hand.rank) ||
-        0
-      elsif rank.fetch(:type) == :two_pair
-        compare_pairs(rank, other_hand.rank) ||
-        compare_cards(rank, other_hand.rank) ||
-        0
-      else
-        compare_value(rank, other_hand.rank) || 
-        compare_cards(rank, other_hand.rank) ||
-        0
-      end
+      rank.has_key?(:value) && compare_value(rank, other_hand.rank) || 
+      rank.has_key?(:full_of) && compare_filler(rank, other_hand.rank) ||
+      rank.has_key?(:pairs) && compare_pairs(rank, other_hand.rank) ||
+      rank.has_key?(:cards) && compare_cards(rank, other_hand.rank) ||
+      0
     else
-      POKER_RANKS.index(rank.fetch(:type)) <=> POKER_RANKS.index(other_hand.rank.fetch(:type))
+      rank_type <=> other_hand_rank_type
     end
   end
 
@@ -53,19 +45,17 @@ class Hand
   end
 
   def compare_value(rank, other_rank)
-    if rank.has_key?(:value) && rank.fetch(:value) != other_rank.fetch(:value)
+    if rank.fetch(:value) != other_rank.fetch(:value)
       rank.fetch(:value) <=> other_rank.fetch(:value)
     end
   end
 
   def compare_filler(rank, other_rank)
-    if rank.has_key?(:full_of)
-      rank.fetch(:full_of) <=> other_rank.fetch(:full_of)
-    end
+    rank.fetch(:full_of) <=> other_rank.fetch(:full_of)
   end
 
   def compare_highest(rank, other_rank)
-    if rank.has_key?(:highest) && rank.fetch(:highest) != other_rank.fetch(:highest)
+    if rank.fetch(:highest) != other_rank.fetch(:highest)
       rank.fetch(:highest) <=> other_rank.fetch(:highest)
     end
   end
@@ -155,7 +145,7 @@ class Hand
     if pips_per_occurence[3] && pips_per_occurence[2]
       {
         :type => :full_house, 
-        :highest => pips_per_occurence[3].first, 
+        :value => pips_per_occurence[3].first, 
         :full_of => pips_per_occurence[2].first
       }
     end

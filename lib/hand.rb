@@ -17,15 +17,20 @@ class Hand
     rank_type = POKER_RANKS.index(rank.fetch(:type))
     other_hand_rank_type = POKER_RANKS.index(other_hand.rank.fetch(:type))
     if rank_type == other_hand_rank_type
-      #TODO: this is terrible, wait until other edge cases are out to refactor
-      if rank.fetch(:value) == other_hand.rank.fetch(:value)
-        (rank.fetch(:cards) - other_hand.rank.fetch(:cards)).max <=> 
-        (other_hand.rank.fetch(:cards) - rank.fetch(:cards)).max
-      else
-        rank.fetch(:value) <=> other_hand.rank.fetch(:value)
-      end
+      compare_value(rank, other_hand.rank) || compare_cards(rank, other_hand.rank)
     else
       POKER_RANKS.index(rank.fetch(:type)) <=> POKER_RANKS.index(other_hand.rank.fetch(:type))
+    end
+  end
+
+  def compare_cards(rank, other_rank)
+    (rank.fetch(:cards) - other_rank.fetch(:cards)).max <=> 
+    (other_rank.fetch(:cards) - rank.fetch(:cards)).max
+  end
+
+  def compare_value(rank, other_rank)
+    if rank.has_key?(:value) && rank.fetch(:value) != other_rank.fetch(:value)
+      rank.fetch(:value) <=> other_rank.fetch(:value)
     end
   end
 

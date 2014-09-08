@@ -64,6 +64,14 @@ describe Hand do
       it "returns the other cards correctly" do
         expect(hand.rank.fetch(:cards)).to eq [9,7,6,5,4]
       end
+      context "comparison" do
+        context "with a hand with lower cards" do
+          let(:other_hand_string_array) { ["4s", "5c", "2d", "3s", "9s"]  }
+          it "is better" do
+            expect(hand).to be > other_hand
+          end
+        end
+      end
     end
 
     context "three of a kind" do

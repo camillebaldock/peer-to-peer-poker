@@ -14,7 +14,19 @@ class Hand
   #TODO: this only implements comparison for cards of different types
   #future things to handle include differentiating hands with the same type
   def <=>(other_hand)
-    POKER_RANKS.index(rank.fetch(:type)) <=> POKER_RANKS.index(other_hand.rank.fetch(:type))
+    rank_type = POKER_RANKS.index(rank.fetch(:type))
+    other_hand_rank_type = POKER_RANKS.index(other_hand.rank.fetch(:type))
+    if rank_type == other_hand_rank_type
+      #TODO: this is terrible, wait until other edge cases are out to refactor
+      if rank.fetch(:value) == other_hand.rank.fetch(:value)
+        (rank.fetch(:cards) - other_hand.rank.fetch(:cards)).max <=> 
+        (other_hand.rank.fetch(:cards) - rank.fetch(:cards)).max
+      else
+        rank.fetch(:value) <=> other_hand.rank.fetch(:value)
+      end
+    else
+      POKER_RANKS.index(rank.fetch(:type)) <=> POKER_RANKS.index(other_hand.rank.fetch(:type))
+    end
   end
 
   POKER_RANKS = [
@@ -29,31 +41,16 @@ class Hand
     :straight_flush,
   ]
 
-  #TODO: refactor this once all test methods returns hashes
   def rank
-    if straight_flush
-      straight_flush
-    elsif has_four
-      has_four
-    elsif full_house
-      full_house
-    elsif flush
-      flush
-    elsif straight
-      straight
-    elsif has_three
-      has_three
-    elsif has_two_pairs
-      has_two_pairs
-    elsif has_two
-      has_two
-    else
-      #TODO: possible duplication happening on pips_per_occurence[1].sort.reverse
-      { 
-        :type => :highest,
-        :cards => pips_per_occurence[1].sort.reverse
-      }
-    end
+    straight_flush ||
+    has_four ||
+    full_house ||
+    flush ||
+    straight ||
+    has_three ||
+    has_two_pairs ||
+    has_two ||
+    highest
   end
 
   private
@@ -64,6 +61,13 @@ class Hand
 
   def suits_per_occurence
     results_per_occurence_number(cards.map(&:suit))
+  end
+
+  def highest
+    { 
+      :type => :highest,
+      :cards => pips_per_occurence[1].sort.reverse
+    }
   end
 
   def has_four
@@ -120,7 +124,7 @@ class Hand
     if suits_per_occurence[5]
       {
         :type => :flush,
-        :cards => cards.map(&:pips).sort.reverse
+        :cards => pips_per_occurence[1].sort.reverse
       }
     end
   end

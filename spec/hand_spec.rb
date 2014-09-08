@@ -10,7 +10,9 @@ describe Hand do
   let(:hand_parser) { HandArrayParser.new(card_parser) }
   let(:pair_hand_string_array) { ["5h", "5d", "6d", "7d", "8d"] }
   let(:hand_string_array) { pair_hand_string_array }
+  let(:other_hand_string_array) { pair_hand_string_array }
   let(:hand) { described_class.new(hand_string_array, hand_parser) }
+  let(:other_hand) { described_class.new(other_hand_string_array, hand_parser) }
 
   describe "hand comparisons" do
     it "tells me if the hand is better" do
@@ -31,6 +33,26 @@ describe Hand do
       end
       it "returns the other cards correctly" do
         expect(hand.rank.fetch(:cards)).to eq [8,7,6]
+      end
+      context "comparison" do
+        context "with a hand with a lower pair" do
+          let(:other_hand_string_array) { ["4h", "4d", "6s", "7s", "8s"]  }
+          it "is better" do
+            expect(hand).to be > other_hand
+          end
+        end
+        context "with a hand with the same pair but lower cards" do
+          let(:other_hand_string_array) { ["5s", "5c", "2d", "7s", "8s"]  }
+          it "is better" do
+            expect(hand).to be > other_hand
+          end
+        end
+        context "with a hand with the same pair and same pips for other cards" do
+          let(:other_hand_string_array) { ["5s", "5c", "6s", "7s", "8s"]  }
+          it "is a tie" do
+            expect(hand).to be == other_hand
+          end
+        end
       end
     end
 

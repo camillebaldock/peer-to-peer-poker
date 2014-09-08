@@ -139,6 +139,26 @@ describe Hand do
       it "returns the full_of value correctly" do
         expect(hand.rank.fetch(:full_of)).to eq 6
       end
+      context "comparison" do
+        context "with a hand with a smaller highest" do
+          let(:other_hand_string_array) { ["4h", "4d", "4s", "6c", "6h"]  }
+          it "is better" do
+            expect(hand).to be > other_hand
+          end
+        end
+        context "with a hand with the same highest but lower filler" do
+          let(:other_hand_string_array) { ["5h", "5d", "5s", "4c", "4h"]  }
+          it "is better" do
+            expect(hand).to be > other_hand
+          end
+        end
+        context "with a hand with the same highest and same filler" do
+          let(:other_hand_string_array) { ["5h", "5d", "5s", "6s", "6d"]  }
+          it "is a tie" do
+            expect(hand).to be == other_hand
+          end
+        end
+      end
     end
     
     context "flush hand" do

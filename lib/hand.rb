@@ -17,7 +17,13 @@ class Hand
     rank_type = POKER_RANKS.index(rank.fetch(:type))
     other_hand_rank_type = POKER_RANKS.index(other_hand.rank.fetch(:type))
     if rank_type == other_hand_rank_type
-      compare_value(rank, other_hand.rank) || compare_cards(rank, other_hand.rank)
+      if rank.fetch(:type) == :full_house
+        compare_highest(rank, other_hand.rank) ||
+        compare_filler(rank, other_hand.rank)
+      else
+        compare_value(rank, other_hand.rank) || 
+        compare_cards(rank, other_hand.rank)
+      end
     else
       POKER_RANKS.index(rank.fetch(:type)) <=> POKER_RANKS.index(other_hand.rank.fetch(:type))
     end
@@ -31,6 +37,18 @@ class Hand
   def compare_value(rank, other_rank)
     if rank.has_key?(:value) && rank.fetch(:value) != other_rank.fetch(:value)
       rank.fetch(:value) <=> other_rank.fetch(:value)
+    end
+  end
+
+  def compare_filler(rank, other_rank)
+    if rank.has_key?(:full_of)
+      rank.fetch(:full_of) <=> other_rank.fetch(:full_of)
+    end
+  end
+
+  def compare_highest(rank, other_rank)
+    if rank.has_key?(:highest) && rank.fetch(:highest) != other_rank.fetch(:highest)
+      rank.fetch(:highest) <=> other_rank.fetch(:highest)
     end
   end
 

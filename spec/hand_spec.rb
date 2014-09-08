@@ -148,6 +148,29 @@ describe Hand do
       it "ranks the hand correctly" do
         expect(hand.rank.fetch(:type)).to eq :straight_flush
       end
+      it "sets the highest hand correctly" do
+        expect(hand.rank.fetch(:highest)).to eq 9
+      end
+    end
+
+    context "straight flush with low ace hand" do
+      let(:hand_string_array) { ["2h", "3h", "4h", "5h", "ah"] }
+      it "ranks the hand correctly" do
+        expect(hand.rank.fetch(:type)).to eq :straight_flush
+      end
+      it "sets the highest hand correctly" do
+        expect(hand.rank.fetch(:highest)).to eq 5
+      end
+    end
+
+    context "straight flush with high ace hand" do
+      let(:hand_string_array) { ["10h", "jh", "qh", "kh", "ah"] }
+      it "ranks the hand correctly" do
+        expect(hand.rank.fetch(:type)).to eq :straight_flush
+      end
+      it "sets the highest hand correctly" do
+        expect(hand.rank.fetch(:highest)).to eq 14
+      end
     end
   end
 end

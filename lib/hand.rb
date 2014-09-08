@@ -32,7 +32,7 @@ class Hand
   #TODO: refactor this once all test methods returns hashes
   def rank
     if straight_flush
-      { :type => :straight_flush }
+      straight_flush
     elsif has_four
       has_four
     elsif full_house
@@ -136,7 +136,9 @@ class Hand
   end
 
   def straight_flush
-    straight && flush
+    if flush && straight
+      straight.merge(:type => :straight_flush)
+    end
   end
 
   def consecutive_cards?(card_values)

@@ -48,7 +48,11 @@ class Hand
     elsif has_two
       has_two
     else
-      { :type => :highest }
+      #TODO: possible duplication happening on pips_per_occurence[1].sort.reverse
+      { 
+        :type => :highest,
+        :cards => pips_per_occurence[1].sort.reverse
+      }
     end
   end
 

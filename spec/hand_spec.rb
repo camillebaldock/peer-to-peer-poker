@@ -50,6 +50,9 @@ describe Hand do
       it "ranks the hand correctly" do
         expect(hand.rank.fetch(:type)).to eq :highest
       end
+      it "returns the other cards correctly" do
+        expect(hand.rank.fetch(:cards)).to eq [9,7,6,5,4]
+      end
     end
 
     context "three of a kind" do

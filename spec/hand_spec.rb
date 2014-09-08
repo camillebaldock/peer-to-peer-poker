@@ -82,6 +82,9 @@ describe Hand do
       it "ranks the hand correctly" do
         expect(hand.rank.fetch(:type)).to eq :flush
       end
+      it "returns the other cards correctly" do
+        expect(hand.rank.fetch(:cards)).to eq [10,8,7,6,5]
+      end
     end
 
     context "straight hand" do

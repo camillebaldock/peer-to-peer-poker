@@ -38,7 +38,7 @@ class Hand
     elsif full_house
       { :type => :full_house }
     elsif flush
-      { :type => :flush }
+      flush
     elsif straight
       straight
     elsif has_three
@@ -111,7 +111,12 @@ class Hand
   end
 
   def flush
-    suits_per_occurence[5]
+    if suits_per_occurence[5]
+      {
+        :type => :flush,
+        :cards => cards.map(&:pips).sort.reverse
+      }
+    end
   end
 
   def straight

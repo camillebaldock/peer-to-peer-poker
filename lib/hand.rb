@@ -29,6 +29,7 @@ class Hand
     :straight_flush,
   ]
 
+  #TODO: refactor this once all test methods returns hashes
   def rank
     if straight_flush
       { :type => :straight_flush }
@@ -43,7 +44,7 @@ class Hand
     elsif has_three
       { :type => :three_of_a_kind }
     elsif has_two_pairs
-      { :type => :two_pair }
+      has_two_pairs
     elsif has_two
       { :type => :pair }
     else
@@ -70,8 +71,14 @@ class Hand
   end
 
   def has_two_pairs
-    grouped_pip_counts = pips_occurence_count.group_by { |i| i }
-    grouped_pip_counts[2] && grouped_pip_counts[2].size == 2
+    results_per_occurence = results_per_occurence_number(cards.map(&:pips))
+    if results_per_occurence[2] && results_per_occurence[2].size == 2
+      { 
+        :type => :two_pair, 
+        :pairs => results_per_occurence[2], 
+        :kicker => results_per_occurence[1].first 
+      }
+    end
   end
 
   def has_two

@@ -11,6 +11,7 @@ describe Hand do
   let(:pair_hand_string_array) { ["5h", "5d", "6d", "7d", "8d"] }
   let(:highest_hand_string_array) { ["4h", "5d", "6d", "7d", "9d"] }
   let(:two_pair_hand_string_array) { ["4h", "4d", "6d", "6h", "9s"] }
+  let(:two_pair_low_kicker_hand_string_array) { ["4h", "4d", "6d", "6h", "2s"] }
   let(:three_of_a_kind_hand_string_array) { ["5h", "5d", "5s", "7d", "8d"] }
   let(:four_of_a_kind_hand_string_array) { ["5h", "5d", "5s", "5c", "8d"] }
   let(:full_house_hand_string_array) { ["5h", "5d", "5s", "6c", "6h"] }
@@ -119,6 +120,19 @@ describe Hand do
       let(:hand_string_array) { two_pair_hand_string_array }
       it "ranks the hand correctly" do
         expect(hand.rank.fetch(:type)).to eq :two_pair
+      end
+      it "sets the pairs correctly" do
+        expect(hand.rank.fetch(:pairs)).to eq [4,6]
+      end
+      it "sets the kicker correctly" do
+        expect(hand.rank.fetch(:kicker)).to eq 9
+      end
+    end
+
+    context "two pairs with low kicker" do
+      let(:hand_string_array) { two_pair_low_kicker_hand_string_array }
+      it "sets the kicker correctly" do
+        expect(hand.rank.fetch(:kicker)).to eq 2
       end
     end
 

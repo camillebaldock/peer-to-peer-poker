@@ -11,13 +11,21 @@ describe ArrayHelper do
     @example_class.extend(ArrayHelper)
   end
 
-  let(:sample_array) { [:a, 1, "b", "B", 1] }
+  let(:sample_array) { [:a, 1, "b", "B", 1, 3, 3] }
 
   describe "#value_occurence_count" do
     it "gives the number of occurences of each value in the array" do
       result = @example_class.value_occurence_count(sample_array)
 
-      expect(result).to eq({ :a => 1, 1 => 2, "b" => 1, "B" => 1 })
+      expect(result).to eq({ :a => 1, 1 => 2, "b" => 1, "B" => 1, 3 => 2 })
+    end
+  end
+
+  describe "#results_per_occurence_number" do
+    it "gives the number of occurences of each value in the array" do
+      result = @example_class.results_per_occurence_number(sample_array)
+
+      expect(result).to eq({ 2 => [1, 3], 1 => [:a, "b", "B"] })
     end
   end
 
@@ -62,6 +70,5 @@ describe ArrayHelper do
 
       expect(result).to be true
     end
-
   end
 end

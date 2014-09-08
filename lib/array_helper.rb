@@ -8,6 +8,19 @@ module ArrayHelper
     result
   end
 
+  def results_per_occurence_number(array)
+    grouped_values = array.group_by { |i| i }
+    result = {}
+    grouped_values.each do |key, value|
+      if result[value.count]
+       result[value.count] << key
+      else
+        result[value.count] = [key]
+      end
+    end
+    result
+  end
+
   def array_consecutive_integers?(array)
     array.sort!
     difference_always_1 = true

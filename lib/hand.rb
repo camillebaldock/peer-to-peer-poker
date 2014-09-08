@@ -39,7 +39,7 @@ class Hand
     elsif flush
       { :type => :flush }
     elsif straight
-      { :type => :straight }
+      straight
     elsif has_three
       { :type => :three_of_a_kind }
     elsif has_two_pairs
@@ -89,10 +89,10 @@ class Hand
   def straight
     card_values = cards.map(&:pips)
     aces_as_ones = aces_as_ones(card_values)
-    if aces_as_ones != card_values
-      consecutive_cards?(aces_as_ones) || consecutive_cards?(card_values)
-    else
-      consecutive_cards?(card_values)
+    if aces_as_ones != card_values && consecutive_cards?(aces_as_ones)
+      { :type => :straight, :highest => 5 }
+    elsif consecutive_cards?(card_values)
+      { :type => :straight, :highest => high_card }
     end
   end
 
@@ -114,6 +114,10 @@ class Hand
       end
     end
     result
+  end
+
+  def high_card
+    cards.map(&:pips).max
   end
 
 end

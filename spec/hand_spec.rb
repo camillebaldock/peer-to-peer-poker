@@ -82,22 +82,43 @@ describe Hand do
       expect(flush_hand.rank).to eq ({:type => :flush})
     end
 
-    it "ranks a straight hand correctly" do
-      straight_hand = described_class.new(straight_hand_string_array, hand_parser)
+    context "straight hand" do
+      it "ranks the hand correctly" do
+        straight_hand = described_class.new(straight_hand_string_array, hand_parser)
 
-      expect(straight_hand.rank).to eq ({:type => :straight})
+        expect(straight_hand.rank.fetch(:type)).to eq :straight
+      end
+      it "sets the highest hand correctly" do
+        straight_hand = described_class.new(straight_hand_string_array, hand_parser)
+
+        expect(straight_hand.rank.fetch(:highest)).to eq 9
+      end
     end
 
-    it "ranks a straight with low ace hand correctly" do
-      straight_hand_low_ace = described_class.new(straight_hand_low_ace_string_array, hand_parser)
+    context "straight with low ace hand" do
+      it "ranks the hand correctly" do
+        straight_hand_low_ace = described_class.new(straight_hand_low_ace_string_array, hand_parser)
 
-      expect(straight_hand_low_ace.rank).to eq ({:type => :straight})
+        expect(straight_hand_low_ace.rank.fetch(:type)).to eq :straight
+      end
+      it "sets the highest hand correctly" do
+        straight_hand_low_ace = described_class.new(straight_hand_low_ace_string_array, hand_parser)
+
+        expect(straight_hand_low_ace.rank.fetch(:highest)).to eq 5
+      end
     end
 
-    it "ranks a straight with high ace hand correctly" do
-      straight_hand_high_ace = described_class.new(straight_hand_high_ace_string_array, hand_parser)
+    context "straight with high ace hand" do
+      it "ranks the hand correctly" do
+        straight_hand_high_ace = described_class.new(straight_hand_high_ace_string_array, hand_parser)
 
-      expect(straight_hand_high_ace.rank).to eq ({:type => :straight})
+        expect(straight_hand_high_ace.rank.fetch(:type)).to eq :straight
+      end
+      it "sets the highest hand correctly" do
+        straight_hand_high_ace = described_class.new(straight_hand_high_ace_string_array, hand_parser)
+
+        expect(straight_hand_high_ace.rank.fetch(:highest)).to eq 14
+      end
     end
 
     it "ranks a two pair hand correctly" do

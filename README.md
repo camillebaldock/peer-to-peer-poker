@@ -1,5 +1,7 @@
 # Peer to Peer: poker ranking
 
+[![Build Status](https://travis-ci.org/camilleldn/peer-to-peer-poker.svg?branch=master)](https://travis-ci.org/camilleldn/peer-to-peer-poker)
+
 ### [Watch the video](http://peertopeer.io/a/cb1/)
 
 I was the second guest on Drew Neil’s [Peer to Peer interview series](http://peertopeer.io/h/cb1/), hosted by [Tom Stuart](http://codon.com). I was given me a programming problem about poker card-ranking. Tom Stuart sat by me and asked me questions about how I was approaching things as I worked on the problem. I had lots of fun making that video: you can [watch the episode here](http://peertopeer.io/a/cb1/).

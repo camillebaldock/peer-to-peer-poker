@@ -1,5 +1,7 @@
 # Peer to Peer: poker ranking
 
+[![Dependency Status](https://gemnasium.com/camilleldn/peer-to-peer-poker.svg)](https://gemnasium.com/camilleldn/peer-to-peer-poker)
+
 [![Build Status](https://travis-ci.org/camilleldn/peer-to-peer-poker.svg?branch=master)](https://travis-ci.org/camilleldn/peer-to-peer-poker)
 
 ### [Watch the video](http://peertopeer.io/a/cb1/)
